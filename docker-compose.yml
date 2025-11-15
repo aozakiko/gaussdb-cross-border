@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   gaussdb:
     profiles: ["local-db"]
@@ -25,7 +23,7 @@ services:
       - ./backend/.env
     environment:
       GAUSS_SSLMODE: disable
-      ALLOW_ORIGINS: http://localhost:8080
+      ALLOW_ORIGINS: '["http://localhost:8080","http://127.0.0.1:8080","*"]'
     ports:
       - "8000:8000"
 
