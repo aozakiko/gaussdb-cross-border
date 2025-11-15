@@ -1,0 +1,295 @@
+:root {
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: light dark;
+  background: #f5f6fb;
+  color: #1f2937;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f0f4ff, #ffffff);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 5vw;
+  background: #111827;
+  color: #f3f4f6;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+header input,
+header button {
+  margin-left: 0.5rem;
+}
+
+.logo {
+  font-size: 2.5rem;
+  margin-right: 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+main {
+  padding: 2rem 5vw 5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.08);
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, #eef2ff, #fef9c3);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.metric-card .label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.metric-card .value {
+  margin: 0.3rem 0 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chart-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.chart-panel button {
+  align-self: flex-end;
+}
+
+.chart-meta {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #475569;
+  gap: 1rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}
+
+button.ghost {
+  background: #e0e7ff;
+  color: #1e3a8a;
+}
+
+button.danger {
+  background: #dc2626;
+}
+
+button.secondary {
+  background: #ffffff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 5vw;
+  color: #4b5563;
+}
+
+pre {
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.badge-pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-in_progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge-done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-awaiting_fulfillment {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-picking {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.badge-in_transit {
+  background: #cffafe;
+  color: #0f766e;
+}
+
+.badge-delivered {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-exception {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.toast {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  min-width: 220px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  color: #0f172a;
+  background: #e0f2fe;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.toast[data-state="success"] {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.toast[data-state="error"] {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.toast[data-state="info"] {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.4rem;
+  text-align: center;
+  background: rgba(37, 99, 235, 0.9);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  z-index: 9;
+}

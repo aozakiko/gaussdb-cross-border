@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}GaussDB 控制台{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+    <link rel="stylesheet" href="/static/dashboard.css" />
+    {% block head_scripts %}{% endblock %}
+</head>
+<body>
+    <header class="top-bar">
+        <div class="brand">
+            <span class="logo">📊</span>
+            <div>
+                <div class="title">GaussDB 控制台</div>
+                <div class="subtitle">FastAPI 后台可视化</div>
+            </div>
+        </div>
+        <div class="meta">
+            <span>{{ now }}</span>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">Powered by FastAPI · SQLAlchemy · openGauss</footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block body_scripts %}{% endblock %}
+</body>
+</html>

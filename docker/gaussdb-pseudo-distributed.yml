@@ -1,0 +1,71 @@
+version: "3.9"
+
+x-gauss-common: &gauss-common
+  image: enmotech/opengauss:5.0.0
+  restart: unless-stopped
+  environment:
+    GS_PASSWORD: Gaussdb@123
+    GS_PORT: 5432
+  networks:
+    - gauss-net
+  ulimits:
+    memlock:
+      soft: -1
+      hard: -1
+    nofile:
+      soft: 65535
+      hard: 65535
+
+services:
+  gauss-primary:
+    <<: *gauss-common
+    container_name: gauss-primary
+    hostname: gauss-primary
+    environment:
+      GS_ROLE: primary
+      GS_NODENAME: primary
+    ports:
+      - "15432:5432"
+    volumes:
+      - gauss-primary-data:/var/lib/opengauss/data
+
+  gauss-standby-1:
+    <<: *gauss-common
+    container_name: gauss-standby-1
+    hostname: gauss-standby-1
+    environment:
+      GS_ROLE: standby
+      GS_PRIMARY_HOST: gauss-primary
+      GS_PRIMARY_PORT: 5432
+      GS_NODENAME: standby1
+    ports:
+      - "15433:5432"
+    volumes:
+      - gauss-standby1-data:/var/lib/opengauss/data
+    depends_on:
+      - gauss-primary
+
+  gauss-standby-2:
+    <<: *gauss-common
+    container_name: gauss-standby-2
+    hostname: gauss-standby-2
+    environment:
+      GS_ROLE: standby
+      GS_PRIMARY_HOST: gauss-primary
+      GS_PRIMARY_PORT: 5432
+      GS_NODENAME: standby2
+    ports:
+      - "15434:5432"
+    volumes:
+      - gauss-standby2-data:/var/lib/opengauss/data
+    depends_on:
+      - gauss-primary
+
+networks:
+  gauss-net:
+    driver: bridge
+
+volumes:
+  gauss-primary-data:
+  gauss-standby1-data:
+  gauss-standby2-data:

@@ -1,0 +1,101 @@
+title,description,status,priority,owner,order_number,sales_channel,destination_market,currency,order_amount,tracking_number,order_date
+折叠跑步机,JP · Amazon US,picking,1,ops-latam,ORD-2025-0001,Amazon US,JP,JPY,223.42,PKG00001JP,2025-01-08T15:00:00
+智能筋膜枪,BR · Amazon US,awaiting_fulfillment,5,ops-cn,ORD-2025-0002,Amazon US,BR,BRL,339.83,PKG00002BR,2024-12-08T08:00:00
+登机箱,BR · Amazon JP,in_transit,4,ops-eu,ORD-2025-0003,Amazon JP,BR,BRL,1060.79,PKG00003BR,2025-01-15T03:00:00
+家用筋膜枪,AE · Amazon JP,exception,1,ops-eu,ORD-2025-0004,Amazon JP,AE,AED,469.74,PKG00004AE,2025-01-09T20:00:00
+折叠跑步机,SG · Shopify,delivered,4,ops-us,ORD-2025-0005,Shopify,SG,SGD,961.16,PKG00005SG,2024-12-12T05:00:00
+蓝牙耳机,AE · 自营官网,delivered,1,ops-cn,ORD-2025-0006,自营官网,AE,AED,501.04,PKG00006AE,2025-01-03T06:00:00
+家用筋膜枪,AE · Amazon US,delivered,3,ops-cn,ORD-2025-0007,Amazon US,AE,AED,524.16,PKG00007AE,2024-12-16T12:00:00
+家用筋膜枪,SG · Shopee,delivered,1,ops-latam,ORD-2025-0008,Shopee,SG,SGD,926.28,PKG00008SG,2024-12-02T12:00:00
+家用筋膜枪,DE · Shopify,awaiting_fulfillment,5,ops-cn,ORD-2025-0009,Shopify,DE,EUR,523.32,PKG00009DE,2024-11-16T12:00:00
+家用筋膜枪,SG · Amazon US,delivered,1,ops-cn,ORD-2025-0010,Amazon US,SG,SGD,1055.31,PKG00010SG,2024-12-21T00:00:00
+登机箱,SG · Amazon JP,picking,3,ops-cn,ORD-2025-0011,Amazon JP,SG,SGD,1192.18,PKG00011SG,2024-12-17T04:00:00
+宠物饮水机,FR · 自营官网,in_transit,4,ops-eu,ORD-2025-0012,自营官网,FR,EUR,982.77,PKG00012FR,2024-12-18T14:00:00
+宠物饮水机,FR · Amazon JP,in_transit,2,ops-cn,ORD-2025-0013,Amazon JP,FR,EUR,993.73,PKG00013FR,2024-11-21T05:00:00
+旅行咖啡机,BR · Shopify,picking,3,ops-latam,ORD-2025-0014,Shopify,BR,BRL,793.86,PKG00014BR,2024-12-16T16:00:00
+旅行咖啡机,US · 自营官网,delivered,3,ops-us,ORD-2025-0015,自营官网,US,USD,720.21,PKG00015US,2024-12-28T12:00:00
+4K 运动相机,AE · Lazada,in_transit,5,ops-cn,ORD-2025-0016,Lazada,AE,AED,1241.27,PKG00016AE,2024-11-20T00:00:00
+折叠跑步机,JP · 自营官网,delivered,3,ops-cn,ORD-2025-0017,自营官网,JP,JPY,683.58,PKG00017JP,2025-01-03T04:00:00
+空气炸锅,US · Shopify,in_transit,2,ops-us,ORD-2025-0018,Shopify,US,USD,188.83,PKG00018US,2024-12-22T23:00:00
+旅行咖啡机,FR · Shopify,awaiting_fulfillment,2,ops-cn,ORD-2025-0019,Shopify,FR,EUR,656.49,PKG00019FR,2025-01-10T15:00:00
+4K 运动相机,AU · Shopify,picking,5,ops-cn,ORD-2025-0020,Shopify,AU,AUD,1139.54,PKG00020AU,2024-12-19T02:00:00
+空气炸锅,AE · Lazada,in_transit,2,ops-us,ORD-2025-0021,Lazada,AE,AED,695.97,PKG00021AE,2025-01-08T01:00:00
+蓝牙耳机,SG · Amazon US,in_transit,1,ops-cn,ORD-2025-0022,Amazon US,SG,SGD,784.55,PKG00022SG,2025-01-15T06:00:00
+空气炸锅,JP · Amazon US,awaiting_fulfillment,2,ops-latam,ORD-2025-0023,Amazon US,JP,JPY,346.51,PKG00023JP,2024-12-03T17:00:00
+蓝牙耳机,DE · 自营官网,in_transit,2,ops-us,ORD-2025-0024,自营官网,DE,EUR,352.75,PKG00024DE,2024-12-15T19:00:00
+睡眠眼罩,JP · 自营官网,picking,1,ops-us,ORD-2025-0025,自营官网,JP,JPY,562.88,PKG00025JP,2024-11-21T07:00:00
+空气炸锅,BR · 自营官网,delivered,5,ops-apac,ORD-2025-0026,自营官网,BR,BRL,185.59,PKG00026BR,2025-01-03T02:00:00
+4K 运动相机,DE · Lazada,picking,4,ops-latam,ORD-2025-0027,Lazada,DE,EUR,361.26,PKG00027DE,2024-11-17T06:00:00
+宠物饮水机,JP · Amazon US,delivered,2,ops-apac,ORD-2025-0028,Amazon US,JP,JPY,1260.25,PKG00028JP,2024-11-17T01:00:00
+家用筋膜枪,AU · Lazada,delivered,1,ops-apac,ORD-2025-0029,Lazada,AU,AUD,1177.05,PKG00029AU,2025-01-04T20:00:00
+折叠跑步机,AE · Lazada,in_transit,4,ops-cn,ORD-2025-0030,Lazada,AE,AED,1245.65,PKG00030AE,2024-11-25T15:00:00
+家用筋膜枪,FR · Shopee,exception,3,ops-us,ORD-2025-0031,Shopee,FR,EUR,772.98,PKG00031FR,2024-12-12T07:00:00
+登机箱,US · Shopify,in_transit,5,ops-us,ORD-2025-0032,Shopify,US,USD,1114.9,PKG00032US,2025-01-05T07:00:00
+蓝牙耳机,DE · Amazon US,awaiting_fulfillment,5,ops-cn,ORD-2025-0033,Amazon US,DE,EUR,1126.27,PKG00033DE,2024-12-21T05:00:00
+旅行咖啡机,US · Shopify,in_transit,3,ops-cn,ORD-2025-0034,Shopify,US,USD,778.59,PKG00034US,2024-12-12T22:00:00
+折叠跑步机,SG · Amazon JP,picking,3,ops-us,ORD-2025-0035,Amazon JP,SG,SGD,888.61,PKG00035SG,2024-12-26T18:00:00
+蓝牙耳机,US · Lazada,exception,2,ops-latam,ORD-2025-0036,Lazada,US,USD,1294.12,PKG00036US,2025-01-10T15:00:00
+空气炸锅,AE · Amazon JP,delivered,2,ops-apac,ORD-2025-0037,Amazon JP,AE,AED,1148.09,PKG00037AE,2024-12-22T23:00:00
+宠物饮水机,AE · Shopify,awaiting_fulfillment,2,ops-eu,ORD-2025-0038,Shopify,AE,AED,1070.38,PKG00038AE,2024-12-27T05:00:00
+宠物饮水机,JP · Amazon US,awaiting_fulfillment,2,ops-eu,ORD-2025-0039,Amazon US,JP,JPY,401.2,PKG00039JP,2025-01-01T22:00:00
+智能筋膜枪,AU · Shopee,awaiting_fulfillment,1,ops-eu,ORD-2025-0040,Shopee,AU,AUD,578.47,PKG00040AU,2024-12-29T07:00:00
+折叠跑步机,DE · 自营官网,awaiting_fulfillment,5,ops-us,ORD-2025-0041,自营官网,DE,EUR,601.29,PKG00041DE,2024-11-30T19:00:00
+4K 运动相机,JP · Amazon US,in_transit,2,ops-apac,ORD-2025-0042,Amazon US,JP,JPY,1092.24,PKG00042JP,2024-12-08T15:00:00
+折叠跑步机,DE · Amazon US,picking,3,ops-cn,ORD-2025-0043,Amazon US,DE,EUR,1215.36,PKG00043DE,2024-11-21T07:00:00
+旅行咖啡机,FR · 自营官网,picking,5,ops-cn,ORD-2025-0044,自营官网,FR,EUR,748.85,PKG00044FR,2024-11-20T19:00:00
+4K 运动相机,FR · Amazon JP,delivered,4,ops-cn,ORD-2025-0045,Amazon JP,FR,EUR,79.98,PKG00045FR,2024-11-28T22:00:00
+旅行咖啡机,AE · Amazon JP,picking,2,ops-apac,ORD-2025-0046,Amazon JP,AE,AED,97.41,PKG00046AE,2024-12-16T01:00:00
+家用筋膜枪,SG · Shopee,awaiting_fulfillment,3,ops-us,ORD-2025-0047,Shopee,SG,SGD,874.04,PKG00047SG,2024-12-20T22:00:00
+宠物饮水机,AE · Shopee,picking,1,ops-us,ORD-2025-0048,Shopee,AE,AED,1275.44,PKG00048AE,2024-12-11T22:00:00
+蓝牙耳机,AE · Amazon JP,exception,4,ops-eu,ORD-2025-0049,Amazon JP,AE,AED,380.83,PKG00049AE,2025-01-08T13:00:00
+蓝牙耳机,SG · Lazada,exception,2,ops-eu,ORD-2025-0050,Lazada,SG,SGD,193.56,PKG00050SG,2024-11-18T14:00:00
+睡眠眼罩,US · 自营官网,awaiting_fulfillment,3,ops-apac,ORD-2025-0051,自营官网,US,USD,1205.97,PKG00051US,2024-12-12T02:00:00
+空气炸锅,JP · 自营官网,in_transit,5,ops-eu,ORD-2025-0052,自营官网,JP,JPY,878.23,PKG00052JP,2025-01-07T23:00:00
+睡眠眼罩,BR · Shopee,delivered,4,ops-cn,ORD-2025-0053,Shopee,BR,BRL,742.02,PKG00053BR,2025-01-02T19:00:00
+宠物饮水机,AE · Lazada,delivered,5,ops-latam,ORD-2025-0054,Lazada,AE,AED,428.84,PKG00054AE,2025-01-01T19:00:00
+登机箱,SG · Lazada,in_transit,1,ops-eu,ORD-2025-0055,Lazada,SG,SGD,316.13,PKG00055SG,2024-12-16T03:00:00
+家用筋膜枪,SG · Amazon US,delivered,1,ops-us,ORD-2025-0056,Amazon US,SG,SGD,329.8,PKG00056SG,2025-01-03T04:00:00
+蓝牙耳机,FR · Lazada,delivered,5,ops-cn,ORD-2025-0057,Lazada,FR,EUR,140.04,PKG00057FR,2024-12-19T12:00:00
+睡眠眼罩,BR · Lazada,picking,4,ops-cn,ORD-2025-0058,Lazada,BR,BRL,869.07,PKG00058BR,2025-01-15T05:00:00
+宠物饮水机,DE · 自营官网,in_transit,4,ops-cn,ORD-2025-0059,自营官网,DE,EUR,745.76,PKG00059DE,2024-11-18T05:00:00
+宠物饮水机,AU · 自营官网,exception,5,ops-latam,ORD-2025-0060,自营官网,AU,AUD,793.32,PKG00060AU,2024-11-15T18:00:00
+登机箱,BR · Shopify,delivered,3,ops-cn,ORD-2025-0061,Shopify,BR,BRL,978.57,PKG00061BR,2024-12-15T18:00:00
+登机箱,AE · Shopify,in_transit,2,ops-eu,ORD-2025-0062,Shopify,AE,AED,392.25,PKG00062AE,2025-01-10T23:00:00
+宠物饮水机,SG · Shopee,awaiting_fulfillment,2,ops-us,ORD-2025-0063,Shopee,SG,SGD,237.54,PKG00063SG,2024-12-22T04:00:00
+空气炸锅,BR · Lazada,in_transit,4,ops-latam,ORD-2025-0064,Lazada,BR,BRL,568.72,PKG00064BR,2025-01-01T19:00:00
+睡眠眼罩,US · Shopify,in_transit,4,ops-latam,ORD-2025-0065,Shopify,US,USD,1227.43,PKG00065US,2024-12-26T20:00:00
+家用筋膜枪,FR · Lazada,picking,4,ops-cn,ORD-2025-0066,Lazada,FR,EUR,656.05,PKG00066FR,2024-12-21T22:00:00
+蓝牙耳机,AU · Amazon JP,in_transit,1,ops-us,ORD-2025-0067,Amazon JP,AU,AUD,1182.66,PKG00067AU,2024-12-08T14:00:00
+登机箱,BR · Amazon JP,awaiting_fulfillment,4,ops-eu,ORD-2025-0068,Amazon JP,BR,BRL,374.2,PKG00068BR,2024-12-26T02:00:00
+折叠跑步机,SG · Lazada,delivered,4,ops-us,ORD-2025-0069,Lazada,SG,SGD,1088.91,PKG00069SG,2024-12-30T06:00:00
+家用筋膜枪,US · Shopee,delivered,1,ops-cn,ORD-2025-0070,Shopee,US,USD,1025.54,PKG00070US,2024-12-05T07:00:00
+蓝牙耳机,FR · Amazon US,awaiting_fulfillment,5,ops-cn,ORD-2025-0071,Amazon US,FR,EUR,206.78,PKG00071FR,2024-12-04T05:00:00
+折叠跑步机,AU · 自营官网,delivered,2,ops-eu,ORD-2025-0072,自营官网,AU,AUD,258.74,PKG00072AU,2024-12-08T05:00:00
+智能筋膜枪,JP · Shopify,delivered,4,ops-cn,ORD-2025-0073,Shopify,JP,JPY,768.75,PKG00073JP,2024-11-17T20:00:00
+家用筋膜枪,JP · Shopify,awaiting_fulfillment,1,ops-latam,ORD-2025-0074,Shopify,JP,JPY,1014.6,PKG00074JP,2024-11-21T13:00:00
+宠物饮水机,US · Shopee,in_transit,3,ops-us,ORD-2025-0075,Shopee,US,USD,512.21,PKG00075US,2024-12-13T12:00:00
+旅行咖啡机,BR · Lazada,in_transit,2,ops-apac,ORD-2025-0076,Lazada,BR,BRL,501.74,PKG00076BR,2024-11-18T18:00:00
+宠物饮水机,DE · 自营官网,exception,4,ops-apac,ORD-2025-0077,自营官网,DE,EUR,386.6,PKG00077DE,2024-11-24T15:00:00
+蓝牙耳机,BR · 自营官网,picking,3,ops-apac,ORD-2025-0078,自营官网,BR,BRL,1113.64,PKG00078BR,2024-11-23T06:00:00
+蓝牙耳机,FR · Lazada,in_transit,3,ops-cn,ORD-2025-0079,Lazada,FR,EUR,522.74,PKG00079FR,2025-01-13T17:00:00
+空气炸锅,AU · Amazon JP,delivered,3,ops-latam,ORD-2025-0080,Amazon JP,AU,AUD,474.42,PKG00080AU,2024-11-19T13:00:00
+家用筋膜枪,US · Shopify,awaiting_fulfillment,2,ops-apac,ORD-2025-0081,Shopify,US,USD,949.09,PKG00081US,2024-12-14T15:00:00
+智能筋膜枪,AU · Lazada,awaiting_fulfillment,3,ops-latam,ORD-2025-0082,Lazada,AU,AUD,326.0,PKG00082AU,2024-12-02T01:00:00
+宠物饮水机,SG · Lazada,in_transit,3,ops-eu,ORD-2025-0083,Lazada,SG,SGD,580.88,PKG00083SG,2024-11-28T15:00:00
+折叠跑步机,AU · Shopee,picking,1,ops-latam,ORD-2025-0084,Shopee,AU,AUD,199.82,PKG00084AU,2025-01-02T22:00:00
+家用筋膜枪,DE · Amazon JP,delivered,5,ops-eu,ORD-2025-0085,Amazon JP,DE,EUR,394.62,PKG00085DE,2024-12-08T16:00:00
+折叠跑步机,JP · Amazon JP,awaiting_fulfillment,2,ops-eu,ORD-2025-0086,Amazon JP,JP,JPY,273.3,PKG00086JP,2025-01-14T15:00:00
+宠物饮水机,US · Amazon US,picking,1,ops-us,ORD-2025-0087,Amazon US,US,USD,1229.11,PKG00087US,2024-12-05T17:00:00
+登机箱,AE · Lazada,in_transit,4,ops-us,ORD-2025-0088,Lazada,AE,AED,279.45,PKG00088AE,2025-01-12T00:00:00
+登机箱,JP · Lazada,awaiting_fulfillment,2,ops-latam,ORD-2025-0089,Lazada,JP,JPY,835.81,PKG00089JP,2025-01-12T04:00:00
+家用筋膜枪,AE · Amazon US,awaiting_fulfillment,5,ops-cn,ORD-2025-0090,Amazon US,AE,AED,1004.55,PKG00090AE,2024-12-07T13:00:00
+登机箱,BR · Lazada,picking,5,ops-latam,ORD-2025-0091,Lazada,BR,BRL,784.66,PKG00091BR,2024-12-18T23:00:00
+旅行咖啡机,US · Shopify,exception,1,ops-cn,ORD-2025-0092,Shopify,US,USD,308.73,PKG00092US,2025-01-02T00:00:00
+宠物饮水机,FR · Amazon JP,awaiting_fulfillment,4,ops-eu,ORD-2025-0093,Amazon JP,FR,EUR,52.34,PKG00093FR,2024-12-17T13:00:00
+折叠跑步机,US · Amazon JP,delivered,2,ops-eu,ORD-2025-0094,Amazon JP,US,USD,927.73,PKG00094US,2024-12-17T06:00:00
+旅行咖啡机,FR · Lazada,in_transit,2,ops-us,ORD-2025-0095,Lazada,FR,EUR,858.54,PKG00095FR,2024-11-18T00:00:00
+折叠跑步机,US · Amazon JP,in_transit,4,ops-us,ORD-2025-0096,Amazon JP,US,USD,1079.3,PKG00096US,2024-11-17T23:00:00
+折叠跑步机,AU · 自营官网,delivered,4,ops-apac,ORD-2025-0097,自营官网,AU,AUD,1227.35,PKG00097AU,2024-12-13T15:00:00
+智能筋膜枪,JP · Shopify,delivered,1,ops-us,ORD-2025-0098,Shopify,JP,JPY,967.17,PKG00098JP,2024-12-08T00:00:00
+蓝牙耳机,FR · 自营官网,in_transit,5,ops-us,ORD-2025-0099,自营官网,FR,EUR,74.93,PKG00099FR,2024-11-28T00:00:00
+宠物饮水机,DE · Lazada,delivered,4,ops-apac,ORD-2025-0100,Lazada,DE,EUR,1194.09,PKG00100DE,2025-01-03T14:00:00

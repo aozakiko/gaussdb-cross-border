@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  gaussdb:
+    profiles: ["local-db"]
+    image: enmotech/opengauss:5.0.0
+    container_name: gaussdb-dev
+    restart: unless-stopped
+    environment:
+      GS_PASSWORD: Gaussdb@123
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: ["CMD", "bash", "-c", "gs_ctl query -D /var/lib/opengauss/data | grep 'cluster_state'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - gauss-data:/var/lib/opengauss/data
+
+  backend:
+    build:
+      context: ./backend
+    env_file:
+      - ./backend/.env
+    environment:
+      GAUSS_SSLMODE: disable
+      ALLOW_ORIGINS: http://localhost:8080
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+volumes:
+  gauss-data:

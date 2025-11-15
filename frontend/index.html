@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>跨境电商订单监控中心 · GaussDB</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="logo">✈️</div>
+        <div>
+          <h1>跨境电商订单监控中心</h1>
+          <p>基于 GaussDB 的全球履约洞察 · FastAPI + 原生前端</p>
+        </div>
+      </div>
+      <div class="connection">
+        <label for="apiBase">API 基础地址</label>
+        <input id="apiBase" type="url" placeholder="http://localhost:8000" />
+        <button id="saveBase" class="secondary">保存</button>
+      </div>
+    </header>
+
+    <div id="toast" class="toast" role="status" hidden></div>
+    <div id="loadingIndicator" class="loading" hidden>数据加载中...</div>
+
+    <main>
+      <section class="card dashboard">
+        <div class="metrics">
+          <div class="metric-card">
+            <p class="label">订单总数</p>
+            <p class="value" id="metricTotal">0</p>
+          </div>
+          <div class="metric-card">
+            <p class="label">GMV (USD)</p>
+            <p class="value" id="metricRevenue">0</p>
+          </div>
+          <div class="metric-card">
+            <p class="label">在途</p>
+            <p class="value" id="metricTransit">0</p>
+          </div>
+          <div class="metric-card">
+            <p class="label">异常/滞留</p>
+            <p class="value" id="metricException">0</p>
+          </div>
+        </div>
+        <div class="chart-panel">
+          <canvas id="statusChart" height="200" width="200" aria-label="跨境订单状态分布" role="img"></canvas>
+          <div class="chart-meta">
+            <small id="lastUpdated">最近更新：--</small>
+            <button type="button" id="refreshRecords">刷新概览</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>录入跨境订单</h2>
+        <form id="createForm" class="grid">
+          <label>订单号<input required name="order_number" maxlength="64" placeholder="ORD-2025-0001" /></label>
+          <label>商品/方案<input required name="title" maxlength="120" placeholder="Nexus 智能洗地机" /></label>
+          <label>销售渠道<input name="sales_channel" value="Amazon US" /></label>
+          <label>目的市场<input name="destination_market" value="US" /></label>
+          <label>币种<input name="currency" value="USD" maxlength="8" /></label>
+          <label>订单金额（可含税）<input type="number" name="order_amount" min="0" step="0.01" value="199.00" /></label>
+          <label>履约状态
+            <select name="status">
+              <option value="awaiting_fulfillment">待履约</option>
+              <option value="picking">拣货中</option>
+              <option value="in_transit">跨境在途</option>
+              <option value="delivered">已签收</option>
+              <option value="exception">异常处理</option>
+            </select>
+          </label>
+          <label>运单号<input name="tracking_number" placeholder="SF123456789CN" /></label>
+          <label>履约专员<input name="owner" value="ops-global" /></label>
+          <label>风险评分 (1-5)<input type="number" name="priority" min="1" max="5" value="1" /></label>
+          <label>下单时间 (ISO)<input name="order_date" placeholder="2025-01-15T08:00:00" /></label>
+          <label>备注<textarea name="description" rows="2" placeholder="海关申报、物流 SLA 等说明"></textarea></label>
+          <button type="submit">创建订单</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <h2>订单列表</h2>
+          <div class="filters">
+            <input id="filterOwner" placeholder="履约专员" />
+            <input id="filterChannel" placeholder="渠道 (Amazon/自营)" />
+            <input id="filterDestination" placeholder="目的地" />
+            <select id="filterStatus">
+              <option value="">全部状态</option>
+              <option value="awaiting_fulfillment">待履约</option>
+              <option value="picking">拣货中</option>
+              <option value="in_transit">在途</option>
+              <option value="delivered">已签收</option>
+              <option value="exception">异常</option>
+            </select>
+            <button id="applyFilters">应用过滤</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>订单号</th>
+                <th>商品/方案</th>
+                <th>渠道</th>
+                <th>目的地</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>履约专员</th>
+                <th>下单日期</th>
+                <th>运单号</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="recordsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" id="editSection" hidden>
+        <h2>编辑订单</h2>
+        <form id="editForm" class="grid">
+          <input type="hidden" name="id" />
+          <label>订单号<input required name="order_number" /></label>
+          <label>商品/方案<input required name="title" /></label>
+          <label>销售渠道<input name="sales_channel" /></label>
+          <label>目的市场<input name="destination_market" /></label>
+          <label>币种<input name="currency" /></label>
+          <label>订单金额<input type="number" step="0.01" name="order_amount" /></label>
+          <label>履约状态
+            <select name="status">
+              <option value="awaiting_fulfillment">待履约</option>
+              <option value="picking">拣货中</option>
+              <option value="in_transit">跨境在途</option>
+              <option value="delivered">已签收</option>
+              <option value="exception">异常</option>
+            </select>
+          </label>
+          <label>运单号<input name="tracking_number" /></label>
+          <label>履约专员<input name="owner" /></label>
+          <label>风险评分<input type="number" name="priority" min="1" max="5" /></label>
+          <label>下单时间<input name="order_date" /></label>
+          <label>备注<textarea name="description" rows="2"></textarea></label>
+          <div class="actions">
+            <button type="submit">保存</button>
+            <button type="button" id="cancelEdit">取消</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="section-header">
+          <h2>Spark 跨境分析</h2>
+          <button id="runAnalytics">运行分布式分析</button>
+        </div>
+        <pre id="analyticsOutput">尚未运行</pre>
+      </section>
+    </main>
+
+    <footer>
+      <span>GaussDB 跨境电商监控 · 支撑多活部署 / PB 级交易数据 · Spark 实时洞察</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}控制台 · GaussDB{% endblock %}
+
+{% block content %}
+<div id="dashboard-root" data-chart='{{ chart | tojson | replace("'", "&#39;") }}'>
+    <section class="grid">
+        <div class="card kpi">
+            <div>
+                <p class="label">订单总数</p>
+                <p class="metric">{{ stats.total }}</p>
+            </div>
+            <div>
+                <p class="label">跨境在途</p>
+                <p class="metric">{{ stats.in_transit }}</p>
+            </div>
+            <div>
+                <p class="label">异常/滞留</p>
+                <p class="metric">{{ stats.exception }}</p>
+            </div>
+            <div>
+                <p class="label">累计 GMV</p>
+                <p class="metric">{{ stats.revenue }}</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>新建订单</h2>
+            <form method="post" action="/admin/records" class="grid">
+                <label>
+                    订单号
+                    <input type="text" name="order_number" required maxlength="64" />
+                </label>
+                <label>
+                    商品/方案
+                    <input type="text" name="title" required maxlength="120" />
+                </label>
+                <label>
+                    销售渠道
+                    <input type="text" name="sales_channel" value="Amazon US" maxlength="64" />
+                </label>
+                <label>
+                    目的市场/国家
+                    <input type="text" name="destination_market" value="US" maxlength="64" />
+                </label>
+                <label>
+                    币种
+                    <input type="text" name="currency" value="USD" maxlength="8" />
+                </label>
+                <label>
+                    金额
+                    <input type="number" step="0.01" min="0" name="order_amount" value="0" />
+                </label>
+                <label>
+                    履约状态
+                    <select name="status">
+                        {% for value, label in status_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <label>
+                    运单号
+                    <input type="text" name="tracking_number" maxlength="64" />
+                </label>
+                <label>
+                    履约专员
+                    <input type="text" name="owner" value="ops-global" maxlength="64" />
+                </label>
+                <label>
+                    风险评分 (1-5)
+                    <input type="number" name="priority" value="1" min="1" max="5" />
+                </label>
+                <label>
+                    下单时间 (ISO)
+                    <input type="text" name="order_date" placeholder="2025-01-15T08:00:00" />
+                </label>
+                <label>
+                    备注
+                    <textarea name="description" rows="2" maxlength="500" placeholder="可选"></textarea>
+                </label>
+                <button type="submit">创建</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>状态分布</h2>
+            <canvas id="statusChart" width="320" height="220"></canvas>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="table-header">
+            <h2>最新订单</h2>
+            <small>共 {{ records|length }} 条</small>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th>商品/方案</th>
+                        <th>渠道</th>
+                        <th>目的地</th>
+                        <th>金额</th>
+                        <th>状态</th>
+                        <th>履约专员</th>
+                        <th>下单日期</th>
+                        <th>运单号</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>#{{ record.order_number }}</td>
+                        <td>
+                            <div class="name">{{ record.title }}</div>
+                            <div class="desc">{{ record.destination_market }} · {{ record.sales_channel }}</div>
+                        </td>
+                        <td>{{ record.sales_channel }}</td>
+                        <td>{{ record.destination_market }}</td>
+                        <td>{{ record.currency }} {{ record.order_amount }}</td>
+                        <td>
+                            <form method="post" action="/admin/records/{{ record.id }}/status" class="inline">
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for value, label in status_choices %}
+                                    <option value="{{ value }}" {% if record.status == value %}selected{% endif %}>{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </td>
+                        <td>{{ record.owner }}</td>
+                        <td>{{ record.order_date }}</td>
+                        <td>{{ record.tracking_number or '—' }}</td>
+                        <td>
+                            <form method="post" action="/admin/records/{{ record.id }}/delete" class="inline" onsubmit="return confirm('确定要删除该订单吗？');">
+                                <button type="submit" class="ghost">删除</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="9">暂无订单</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>关键指标</h2>
+        <div class="analytics">
+            {% for row in analytics %}
+            <div>
+                <div class="label">{{ row.label }}</div>
+                <div class="metric">{{ row.value }}</div>
+            </div>
+            {% else %}
+            <p>暂无分析数据。</p>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block body_scripts %}
+<script>
+    const root = document.getElementById('dashboard-root');
+    const chartPayload = JSON.parse(root.dataset.chart);
+    const statusLabels = chartPayload.labels;
+    const statusCounts = chartPayload.counts;
+    new Chart(document.getElementById('statusChart'), {
+        type: 'doughnut',
+        data: {
+            labels: statusLabels,
+            datasets: [{ data: statusCounts, backgroundColor: ['#93c5fd', '#fbbf24', '#34d399'] }]
+        },
+        options: { plugins: { legend: { position: 'bottom' } } }
+    });
+</script>
+{% endblock %}
