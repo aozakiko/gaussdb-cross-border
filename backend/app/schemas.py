@@ -54,9 +54,9 @@ class PaginatedRecords(BaseModel):
     items: List[RecordOut]
 
 
-class SparkAnalyticsResult(BaseModel):
+class FlinkAnalyticsResult(BaseModel):
     total_records: int
     by_status: dict
     by_owner: dict
-    engine: str = Field("spark", description="计算引擎: spark 或 sql_fallback")
+    engine: str = Field("flink", description="计算引擎: flink 或 sql_fallback")
     detail: Optional[str] = Field(None, description="若发生降级，记录原因")

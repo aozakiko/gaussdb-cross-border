@@ -26,10 +26,9 @@ class Settings(BaseSettings):
     gauss_password: str = "secret"
     gauss_sslmode: str = "prefer"
 
-    # Spark analytics job
-    spark_master: str = "local[*]"
-    spark_app_name: str = "GaussDBAnalytics"
-    spark_jar_path: Optional[str] = None
+    # Flink analytics job
+    flink_job_name: str = "GaussDBFlinkAnalytics"
+    flink_parallelism: int = 1
 
     # API behavior
     allow_origins: List[str] = ["http://localhost:4173", "http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:8080", "*"]

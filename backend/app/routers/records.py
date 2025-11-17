@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 
 from .. import models, schemas
 from ..database import get_db
-from ..services.spark_job import run_spark_summary
+from ..services.flink_job import run_flink_summary
 
 router = APIRouter(prefix="/records", tags=["Records"])
 ALLOWED_STATUSES = {"awaiting_fulfillment", "picking", "in_transit", "delivered", "exception"}
@@ -103,6 +103,19 @@ def delete_record(record_id: int, db: Session = Depends(get_db)):
     db.commit()
 
 
-@router.get("/analytics/spark", response_model=schemas.SparkAnalyticsResult)
-def spark_analytics():
-    return run_spark_summary()
+@router.get("/analytics/flink", response_model=schemas.FlinkAnalyticsResult)
+def flink_analytics():
+    return run_flink_summary()
+
+
+@router.get(
+    "/analytics/spark",
+    response_model=schemas.FlinkAnalyticsResult,
+    tags=["Records"],
+    summary="Deprecated Spark analytics endpoint",
+)
+def legacy_spark_analytics():
+    """Backward compatible shim for clients that still hit the legacy Spark route."""
+    payload = schemas.FlinkAnalyticsResult(**run_flink_summary())
+    payload.engine = f"{payload.engine or 'flink'} (via spark alias)"
+    return payload

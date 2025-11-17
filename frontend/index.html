@@ -151,20 +151,53 @@
         </form>
       </section>
 
-      <section class="card">
+      <section class="card analytics-panel">
         <div class="section-header">
-          <h2>Spark 跨境分析</h2>
+          <h2>Flink 跨境分析</h2>
           <button id="runAnalytics">运行分布式分析</button>
         </div>
-        <pre id="analyticsOutput">尚未运行</pre>
+
+        <div class="analytics-grid">
+          <div class="analytics-metric">
+            <p>分析总量</p>
+            <strong id="analyticsTotal">--</strong>
+          </div>
+          <div class="analytics-metric">
+            <p>执行引擎</p>
+            <strong id="analyticsEngine">--</strong>
+          </div>
+          <div class="analytics-metric">
+            <p>诊断信息</p>
+            <strong id="analyticsDetail">尚未运行</strong>
+          </div>
+        </div>
+
+        <div class="analytics-charts">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>按履约状态</h3>
+              <small>Flink Table API</small>
+            </div>
+            <canvas id="analyticsStatusChart" height="200" aria-label="按状态统计"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3>按履约专员</h3>
+              <small>Flink Table API</small>
+            </div>
+            <canvas id="analyticsOwnerChart" height="200" aria-label="按专员统计"></canvas>
+          </div>
+        </div>
+
+        <pre id="analyticsOutput" class="analytics-raw" hidden>尚未运行</pre>
       </section>
     </main>
 
     <footer>
-      <span>GaussDB 跨境电商监控 · 支撑多活部署 / PB 级交易数据 · Spark 实时洞察</span>
+  <span>GaussDB 跨境电商监控 · 支撑多活部署 / PB 级交易数据 · Flink 实时洞察</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="app.js" type="module"></script>
+    <script src="app.js?v=20251117" type="module"></script>
   </body>
 </html>

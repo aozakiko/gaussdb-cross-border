@@ -11,6 +11,11 @@ const filterChannel = document.getElementById("filterChannel");
 const filterDestination = document.getElementById("filterDestination");
 const applyFiltersBtn = document.getElementById("applyFilters");
 const analyticsOutput = document.getElementById("analyticsOutput");
+const analyticsTotal = document.getElementById("analyticsTotal");
+const analyticsEngine = document.getElementById("analyticsEngine");
+const analyticsDetail = document.getElementById("analyticsDetail");
+const analyticsStatusChartCanvas = document.getElementById("analyticsStatusChart");
+const analyticsOwnerChartCanvas = document.getElementById("analyticsOwnerChart");
 const runAnalyticsBtn = document.getElementById("runAnalytics");
 const toast = document.getElementById("toast");
 const loadingIndicator = document.getElementById("loadingIndicator");
@@ -22,10 +27,13 @@ const lastUpdated = document.getElementById("lastUpdated");
 const refreshBtn = document.getElementById("refreshRecords");
 const statusChartCanvas = document.getElementById("statusChart");
 const DEFAULT_LIMIT = 500;
+const ANALYTICS_COLORS = ["#2563eb", "#22c55e", "#f97316", "#ec4899", "#14b8a6", "#8b5cf6", "#0f172a"];
 
 let apiBase = localStorage.getItem("gauss_api_base") || "http://localhost:8000";
 apiBaseInput.value = apiBase;
 let statusChart;
+let analyticsStatusChart;
+let analyticsOwnerChart;
 let latestRecords = [];
 
 const headers = { "Content-Type": "application/json" };
@@ -91,7 +99,10 @@ async function fetchRecords(options = {}) {
     if (showToast) notify("数据已刷新", "success");
   } catch (error) {
     notify(error.message, "error");
-    analyticsOutput.textContent = `无法连接 API: ${error.message}`;
+    if (analyticsOutput) {
+      analyticsOutput.hidden = false;
+      analyticsOutput.textContent = `无法连接 API: ${error.message}`;
+    }
     throw error;
   } finally {
     setLoading(false);
@@ -126,27 +137,50 @@ function renderRecords(items = []) {
 }
 
 recordsBody.addEventListener("click", async (event) => {
-  const action = event.target.dataset.action;
-  if (!action) return;
-  const id = Number(event.target.dataset.id);
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+  const action = button.dataset.action;
+  const id = Number(button.dataset.id);
+  if (!Number.isFinite(id)) {
+    notify("未找到记录 ID", "error");
+    return;
+  }
   if (action === "edit") {
-    const record = await request(`/records/${id}`);
-    showEditForm(record);
+    setLoading(true);
+    try {
+      const record = await request(`/records/${id}`);
+      showEditForm(record);
+      notify(`已加载记录 #${record.order_number || id}`, "info");
+    } catch (error) {
+      notify(error.message, "error");
+    } finally {
+      setLoading(false);
+    }
   } else if (action === "delete") {
     if (confirm("确认删除该记录吗？")) {
-      await request(`/records/${id}`, { method: "DELETE" });
-      await fetchRecords();
-      notify("记录已删除", "success");
+      try {
+        await request(`/records/${id}`, { method: "DELETE" });
+        await fetchRecords();
+        notify("记录已删除", "success");
+      } catch (error) {
+        notify(error.message, "error");
+      }
     }
   }
 });
 
 function showEditForm(record) {
-  editSection.hidden = false;
+  if (!record) return;
+  editForm.reset();
   for (const [key, value] of Object.entries(record)) {
     const field = editForm.elements.namedItem(key);
-    if (field) field.value = value;
+    if (!field) continue;
+    field.value = value ?? "";
   }
+  editSection.hidden = false;
+  editSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  const firstField = editForm.querySelector("input[name='order_number']");
+  if (firstField) firstField.focus();
 }
 
 createForm.addEventListener("submit", async (event) => {
@@ -195,16 +229,34 @@ cancelEditBtn.addEventListener("click", () => {
 });
 
 applyFiltersBtn.addEventListener("click", fetchRecords);
-runAnalyticsBtn.addEventListener("click", async () => {
-  try {
-    analyticsOutput.textContent = "运行中...";
-    const data = await request("/records/analytics/spark");
-    analyticsOutput.textContent = JSON.stringify(data, null, 2);
-  } catch (error) {
-    analyticsOutput.textContent = error.message;
-    notify(error.message, "error");
-  }
-});
+if (runAnalyticsBtn) {
+  runAnalyticsBtn.addEventListener("click", async () => {
+    if (analyticsOutput) {
+      analyticsOutput.hidden = false;
+      analyticsOutput.textContent = "运行中...";
+    }
+    if (analyticsDetail) {
+      analyticsDetail.textContent = "分析运行中...";
+    }
+    runAnalyticsBtn.disabled = true;
+    try {
+      const data = await request("/records/analytics/flink");
+      renderAnalyticsView(data);
+      notify("Flink 分析完成", "success");
+    } catch (error) {
+      if (analyticsDetail) {
+        analyticsDetail.textContent = `分析失败：${error.message}`;
+      }
+      if (analyticsOutput) {
+        analyticsOutput.hidden = false;
+        analyticsOutput.textContent = error.message;
+      }
+      notify(error.message, "error");
+    } finally {
+      runAnalyticsBtn.disabled = false;
+    }
+  });
+}
 
 saveBaseBtn.addEventListener("click", () => {
   apiBase = apiBaseInput.value.replace(/\/$/, "");
@@ -229,6 +281,86 @@ function updateInsights(items = []) {
   metricException.textContent = exception;
   lastUpdated.textContent = `最近更新：${new Date().toLocaleString()}`;
   updateChart(items);
+}
+
+function renderAnalyticsView(payload) {
+  if (!payload) return;
+
+  if (analyticsTotal) {
+    const total = Number(payload.total_records || 0);
+    analyticsTotal.textContent = total.toLocaleString();
+  }
+  if (analyticsEngine) {
+    analyticsEngine.textContent = payload.engine || "flink";
+  }
+  if (analyticsDetail) {
+    analyticsDetail.textContent = payload.detail || "运行正常";
+  }
+  if (analyticsOutput) {
+    analyticsOutput.textContent = JSON.stringify(payload, null, 2);
+    analyticsOutput.hidden = true;
+  }
+
+  const statusEntries = Object.entries(payload.by_status || {});
+  const statusLabels = statusEntries.length ? statusEntries.map(([key]) => formatStatus(key)) : ["暂无数据"];
+  const statusValues = statusEntries.length ? statusEntries.map(([, value]) => value) : [1];
+  analyticsStatusChart = mountAnalyticsChart(analyticsStatusChart, analyticsStatusChartCanvas, {
+    type: "doughnut",
+    labels: statusLabels,
+    values: statusValues,
+  });
+
+  const ownerEntries = Object.entries(payload.by_owner || {});
+  const ownerLabels = ownerEntries.length ? ownerEntries.map(([key]) => key) : ["暂无数据"];
+  const ownerValues = ownerEntries.length ? ownerEntries.map(([, value]) => value) : [1];
+  analyticsOwnerChart = mountAnalyticsChart(analyticsOwnerChart, analyticsOwnerChartCanvas, {
+    type: "bar",
+    labels: ownerLabels,
+    values: ownerValues,
+  });
+}
+
+function mountAnalyticsChart(instance, canvas, config) {
+  if (!(canvas && window.Chart)) return instance;
+  const colors = config.labels.map((_, idx) => ANALYTICS_COLORS[idx % ANALYTICS_COLORS.length]);
+  const dataset = {
+    label: "订单数",
+    data: config.values,
+    backgroundColor: colors,
+    borderWidth: 0,
+    borderRadius: config.type === "bar" ? 6 : 0,
+  };
+
+  const options = {
+    plugins: {
+      legend: { position: "bottom" },
+    },
+  };
+
+  if (config.type === "bar") {
+    options.indexAxis = "y";
+    options.scales = {
+      x: { beginAtZero: true, ticks: { precision: 0 } },
+      y: { ticks: { autoSkip: false } },
+    };
+  }
+
+  if (!instance) {
+    return new Chart(canvas, {
+      type: config.type,
+      data: {
+        labels: config.labels,
+        datasets: [dataset],
+      },
+      options,
+    });
+  }
+
+  instance.data.labels = config.labels;
+  instance.data.datasets[0].data = config.values;
+  instance.data.datasets[0].backgroundColor = colors;
+  instance.update();
+  return instance;
 }
 
 function updateChart(items = []) {
@@ -304,5 +436,8 @@ function formatStatus(status) {
 }
 
 fetchRecords().catch((error) => {
-  analyticsOutput.textContent = `无法连接 API: ${error.message}`;
+  if (analyticsOutput) {
+    analyticsOutput.hidden = false;
+    analyticsOutput.textContent = `无法连接 API: ${error.message}`;
+  }
 });

@@ -1,5 +1,13 @@
 # syntax=docker/dockerfile:1.6
+# syntax=docker/dockerfile:1.6
 FROM python:3.11-slim AS base
+
+# Install JDK for PyFlink (defaults to Temurin/OpenJDK 17 which is LTS)
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends openjdk-17-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 \
+    PATH="${JAVA_HOME}/bin:${PATH}"
 
 ARG PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
 ARG PIP_TRUSTED_HOST=pypi.tuna.tsinghua.edu.cn

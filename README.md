@@ -2,14 +2,14 @@
 
 该项目基于 **FastAPI + 原生前端** 搭建了一个“跨境电商订单监控中心”，依托 GaussDB 的高可用分布式能力管理海量订单：
 
-- 后端：使用 SQLAlchemy/Pydantic 定义跨境订单模型（订单号、渠道、目的国、币种、金额、物流状态、运单号、风控优先级等），提供 REST API、Jinja2 后台和 Spark 分析接口。
+- 后端：使用 SQLAlchemy/Pydantic 定义跨境订单模型（订单号、渠道、目的国、币种、金额、物流状态、运单号、风控优先级等），提供 REST API、Jinja2 后台和 Flink 分析接口。
 - 前端：纯静态 HTML/CSS/JS + Chart.js，内置仪表盘（GMV、在途、异常等 KPI）、订单录入表单、过滤列表、状态可视化。
 - 数据：附带 `data/orders_seed.csv`，可一次性导入 GaussDB 进行演示；同时提供 `scripts/generate_seed.py` 生成更多数据。
 
 ## 目录结构
 
 ```
-backend/            # FastAPI + SQLAlchemy + Spark 服务端
+backend/            # FastAPI + SQLAlchemy + Flink 服务端
 frontend/           # 原生 HTML/CSS/JS 单页应用
 docker-compose.yml  # 一体化前后端 + GaussDB (开发用)
 docker/gaussdb-pseudo-distributed.yml # 伪分布式 GaussDB 编排
@@ -71,11 +71,11 @@ docker compose -f gaussdb-pseudo-distributed.yml up -d
 
 > 初次启动后，请登录主节点执行 `gs_ctl build -b full -D /var/lib/opengauss/data -Z single_node` 来初始化备机，并确保 `pg_hba.conf` 中允许备机复制。更多调优可参考 openGauss 官方文档。
 
-## Spark 分析任务
+## Flink 分析任务
 
-- `app/services/spark_job.py` 会通过 JDBC 将 `records` 表加载到 Spark DataFrame，并统计状态/负责人分布。
-- 若运行环境暂未安装 PySpark 或缺少 JDBC 驱动，API 将返回 503，提示完善依赖。
-- 设置 `SPARK_MASTER`、`SPARK_APP_NAME`、`SPARK_JAR_PATH` 即可在远端 Spark 集群执行。
+- `app/services/flink_job.py` 使用 PyFlink Table API 读取 `records` 数据，统计状态/负责人分布。
+- 若运行环境未安装 PyFlink，会自动降级为原生 SQL 统计并在响应中说明原因。
+- 通过 `FLINK_JOB_NAME`、`FLINK_PARALLELISM` 控制作业名称与并行度，便于对接独立 Flink 集群。
 
 ## 实验报告
 
@@ -83,7 +83,7 @@ docker compose -f gaussdb-pseudo-distributed.yml up -d
 
 1. 源码级编译安装 GaussDB（本地 VM，一主两备）
 2. 容器化伪分布式部署（云开发者空间）
-3. Web 前端、后端、Spark 作业实现细节
+3. Web 前端、后端、Flink 作业实现细节
 4. Docker 镜像制作与推送
 5. 常见问题与排障
 
@@ -151,10 +151,10 @@ pytest
 	FROM 'data/orders_seed.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8');
 	```
 
-3. 刷新前端或后台控制台即可看到 100 条跨境订单示例，便于进行过滤、状态更新、Spark 聚合等操作。
+3. 刷新前端或后台控制台即可看到 100 条跨境订单示例，便于进行过滤、状态更新、Flink 聚合等操作。
 
 ## 下一步
 
 - 可扩展多币种汇率折算、SKU 维度分层、异常告警推送。
-- 引入实时流（Flink/Spark Streaming）对在途/异常状态进行毫秒级监测。
+- 引入实时流（Flink Streaming 或 Spark Streaming）对在途/异常状态进行毫秒级监测。
 - 衔接企业自建 ES/ClickHouse 做多维检索与 BI 展示。
